@@ -1,0 +1,50 @@
+type Comment {
+  postId: ID!
+  replyToId: ID
+  authorId: ID!
+  content: String!
+  createdAt: String!
+  updatedAt: String!
+  likesUserIds: [ID!]!
+  replyIds: [ID!]!
+}
+
+type CommentResponseSingle {
+  data: Comment
+}
+
+type CommentResponseMultiple {
+  data: [Comment]
+}
+
+type MutationCommentResponse {
+  data: Comment
+}
+
+type Error {
+  error: String!
+}
+
+union CommentResponseSingleUnion = CommentResponseSingle | Error
+union CommentResponseMultipleUnion = CommentResponseMultiple | Error
+union MutationCommentResponseUnion = MutationCommentResponse | Error
+
+type Query {
+  commentsByPostId(postId: ID): CommentResponseMultipleUnion!
+  commentsByReplyToId(replyToId: ID): CommentResponseMultipleUnion!
+  commentsByAuthorId(authorId: ID): CommentResponseMultipleUnion!
+  comment(id: ID!): CommentResponseSingleUnion!
+}
+
+type Mutation {
+  createComment(
+    postId: ID!
+    replyToId: ID
+    content: String!
+    authorId: ID!
+  ): MutationCommentResponseUnion!
+  updateComment(id: ID!, content: String!): MutationCommentResponseUnion!
+  deleteComment(id: ID!): MutationCommentResponseUnion!
+  likeComment(id: ID!): MutationCommentResponseUnion!
+  unlikeComment(id: ID!): MutationCommentResponseUnion!
+}

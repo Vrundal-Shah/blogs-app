@@ -1,0 +1,62 @@
+type User {
+  firstName: String!
+  lastName: String
+  email: String!
+  posts: [Post]
+  comments: [Comment]
+}
+
+type AuthResponse {
+  accessToken: String!
+  refreshToken: String
+  userId: ID!
+}
+
+type Query {
+  getUserById(id: ID!): QueryResponseSingleUnion
+  getUserByEmail(email: String!): QueryResponseSingleUnion
+  getAllUsers: QueryResponseMultipleUnion
+}
+
+type Mutation {
+  signUpGoogle(accessToken: String!): AuthResponseUnion
+  signOutGoogle: MutationResponseBooleanUnion
+  updateUser(
+    id: ID!
+    firstName: String
+    lastName: String
+    email: String
+  ): MutationResponseUnion
+  deleteUserById(id: ID!): MutationResponseBooleanUnion
+  deleteUserByEmail(email: String!): MutationResponseBooleanUnion
+}
+
+type QueryResponseSingle {
+  data: User
+}
+
+type QueryResponseMultiple {
+  data: [User]
+}
+
+type MutationResponse {
+  data: User
+}
+
+type MutationResponseBoolean {
+  data: Boolean!
+}
+
+type Error {
+  error: String!
+}
+
+union AuthResponseUnion = AuthResponse | Error
+
+union QueryResponseSingleUnion = QueryResponseSingle | Error
+
+union QueryResponseMultipleUnion = QueryResponseMultiple | Error
+
+union MutationResponseUnion = MutationResponse | Error
+
+union MutationResponseBooleanUnion = MutationResponseBoolean | Error

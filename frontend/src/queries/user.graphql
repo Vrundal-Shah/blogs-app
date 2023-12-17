@@ -1,0 +1,124 @@
+query GetUserById($id: ID!) {
+  getUserById(id: $id) {
+    ... on QueryResponseSingle {
+      data {
+        ...UserFields
+      }
+    }
+    ... on Error {
+      error
+    }
+  }
+}
+
+query GetUserByEmail($email: String!) {
+  getUserByEmail(email: $email) {
+    ... on QueryResponseSingle {
+      data {
+        ...UserFields
+      }
+    }
+    ... on Error {
+      error
+    }
+  }
+}
+
+query GetAllUsers {
+  getAllUsers {
+    ... on QueryResponseMultiple {
+      data {
+        ...UserFields
+      }
+    }
+    ... on Error {
+      error
+    }
+  }
+}
+
+# Mutations
+mutation SignUpGoogle($accessToken: String!) {
+  signUpGoogle(accessToken: $accessToken) {
+    ... on AuthResponse {
+      accessToken
+      refreshToken
+      userId
+    }
+    ... on Error {
+      error
+    }
+  }
+}
+
+mutation SignOutGoogle {
+  signOutGoogle {
+    ... on MutationResponseBoolean {
+      data
+    }
+    ... on Error {
+      error
+    }
+  }
+}
+
+mutation UpdateUser(
+  $id: ID!
+  $firstName: String
+  $lastName: String
+  $email: String
+) {
+  updateUser(
+    id: $id
+    firstName: $firstName
+    lastName: $lastName
+    email: $email
+  ) {
+    ... on MutationResponse {
+      data {
+        ...UserFields
+      }
+    }
+    ... on Error {
+      error
+    }
+  }
+}
+
+mutation DeleteUserById($id: ID!) {
+  deleteUserById(id: $id) {
+    ... on MutationResponseBoolean {
+      data
+    }
+    ... on Error {
+      error
+    }
+  }
+}
+
+mutation DeleteUserByEmail($email: String!) {
+  deleteUserByEmail(email: $email) {
+    ... on MutationResponseBoolean {
+      data
+    }
+    ... on Error {
+      error
+    }
+  }
+}
+
+fragment UserFields on User {
+  firstName
+  lastName
+  email
+  posts {
+    # Add fields from Post type as required
+    title
+    content
+    author
+    tags
+  }
+  comments {
+    postId
+  }
+}

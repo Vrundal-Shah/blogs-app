@@ -1,0 +1,35 @@
+.commentsContainer {
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 700px;
+  margin: 20px 0;
+}
+
+.comment {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 10px 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: 10px;
+  transition: background-color 0.3s;
+}
+
+.comment:hover {
+  background-color: #e6e6e6;
+}
+
+.addCommentSection {
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .commentsContainer {
+    padding: 10px;
+  }
+
+  .comment {
+    padding: 8px 12px;
+  }
+}

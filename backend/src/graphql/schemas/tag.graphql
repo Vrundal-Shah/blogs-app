@@ -1,0 +1,38 @@
+type Tag {
+  name: String!
+}
+
+type TagInput {
+  id: ID!
+  name: String!
+}
+
+type TagResponseSingle {
+  data: TagInput
+}
+
+type TagResponseMultiple {
+  data: [TagInput]
+}
+
+type MutationTagResponse {
+  data: TagInput
+}
+
+type Error {
+  error: String!
+}
+
+union TagResponseSingleUnion = TagResponseSingle | Error
+union TagResponseMultipleUnion = TagResponseMultiple | Error
+union MutationTagResponseUnion = MutationTagResponse | Error
+
+type Query {
+  tags: TagResponseMultipleUnion!
+}
+
+type Mutation {
+  createTag(name: String!): MutationTagResponseUnion!
+  updateTag(id: ID!, name: String!): MutationTagResponseUnion!
+  deleteTag(id: ID!): MutationTagResponseUnion!
+}

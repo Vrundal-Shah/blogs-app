@@ -1,0 +1,216 @@
+# Queries
+
+# Fetch all comments for a particular post
+query GetCommentsByPostId($postId: ID!) {
+  commentsByPostId(postId: $postId) {
+    ... on CommentResponseMultiple {
+      data {
+        postId
+        replyToId
+        authorId
+        content
+        createdAt
+        updatedAt
+        likesUserIds
+        replyIds
+      }
+    }
+    ... on Error {
+      error
+    }
+  }
+}
+
+# Fetch all comments that are replies to a specific comment
+query GetCommentsByReplyToId($replyToId: ID!) {
+  commentsByReplyToId(replyToId: $replyToId) {
+    ... on CommentResponseMultiple {
+      data {
+        postId
+        replyToId
+        authorId
+        content
+        createdAt
+        updatedAt
+        likesUserIds
+        replyIds
+      }
+    }
+    ... on Error {
+      error
+    }
+  }
+}
+
+# Fetch all comments written by a particular author
+query GetCommentsByAuthorId($authorId: ID!) {
+  commentsByAuthorId(authorId: $authorId) {
+    ... on CommentResponseMultiple {
+      data {
+        postId
+        replyToId
+        authorId
+        content
+        createdAt
+        updatedAt
+        likesUserIds
+        replyIds
+      }
+    }
+    ... on Error {
+      error
+    }
+  }
+}
+
+# Fetch a specific comment by its ID
+query GetCommentById($id: ID!) {
+  comment(id: $id) {
+    ... on CommentResponseSingle {
+      data {
+        postId
+        replyToId
+        authorId
+        content
+        createdAt
+        updatedAt
+        likesUserIds
+        replyIds
+      }
+    }
+    ... on Error {
+      error
+    }
+  }
+}
+
+# Mutations
+
+# Create a new comment (optionally as a reply to another comment)
+mutation CreateNewComment(
+  $postId: ID!
+  $replyToId: ID
+  $content: String!
+  $authorId: ID!
+) {
+  createComment(
+    postId: $postId
+    replyToId: $replyToId
+    content: $content
+    authorId: $authorId
+  ) {
+    ... on MutationCommentResponse {
+      data {
+        postId
+        replyToId
+        authorId
+        content
+        createdAt
+        updatedAt
+        likesUserIds
+        replyIds
+      }
+    }
+    ... on Error {
+      error
+    }
+  }
+}
+
+# Update the content of an existing comment
+mutation UpdateExistingComment($id: ID!, $content: String!) {
+  updateComment(id: $id, content: $content) {
+    ... on MutationCommentResponse {
+      data {
+        postId
+        replyToId
+        authorId
+        content
+        createdAt
+        updatedAt
+        likesUserIds
+        replyIds
+      }
+    }
+    ... on Error {
+      error
+    }
+  }
+}
+
+# Delete a comment by its ID
+mutation DeleteExistingComment($id: ID!) {
+  deleteComment(id: $id) {
+    ... on MutationCommentResponse {
+      data {
+        postId
+        replyToId
+        authorId
+        content
+        createdAt
+        updatedAt
+        likesUserIds
+        replyIds
+      }
+    }
+    ... on Error {
+      error
+    }
+  }
+}
+
+# Like a comment
+mutation LikeAComment($id: ID!) {
+  likeComment(id: $id) {
+    ... on MutationCommentResponse {
+      data {
+        postId
+        replyToId
+        authorId
+        content
+        createdAt
+        updatedAt
+        likesUserIds
+        replyIds
+      }
+    }
+    ... on Error {
+      error
+    }
+  }
+}
+
+# Unlike a comment
+mutation UnlikeAComment($id: ID!) {
+  unlikeComment(id: $id) {
+    ... on MutationCommentResponse {
+      data {
+        postId
+        replyToId
+        authorId
+        content
+        createdAt
+        updatedAt
+        likesUserIds
+        replyIds
+      }
+    }
+    ... on Error {
+      error
+    }
+  }
+}
+
+# Fragments
+
+# Fragment to reduce repetition in the queries and mutations above
+fragment CommentDetails on Comment {
+  postId
+  replyToId
+  authorId
+  content
+  createdAt
+  updatedAt
+  likesUserIds
+  replyIds
+}

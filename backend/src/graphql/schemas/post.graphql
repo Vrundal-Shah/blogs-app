@@ -1,0 +1,62 @@
+type Post {
+  userId: ID!
+  title: String!
+  content: String!
+  author: String!
+  createdAt: String!
+  updatedAt: String!
+  tags: [String!]!
+  commentIds: [ID!]!
+}
+
+type ExtendedPost {
+  _id: ID!
+  post: Post!
+}
+
+type PostResponseSingle {
+  data: Post
+}
+
+type PostResponseMultiple {
+  data: [ExtendedPost]
+}
+
+type MutationPostResponse {
+  data: Post
+}
+
+type Error {
+  error: String!
+}
+
+union PostResponseSingleUnion = PostResponseSingle | Error
+
+union PostResponseMultipleUnion = PostResponseMultiple | Error
+
+union MutationPostResponseUnion = MutationPostResponse | Error
+
+type Query {
+  posts: PostResponseMultipleUnion!
+  post(id: ID!): PostResponseSingleUnion!
+}
+
+type Mutation {
+  createPost(
+    userId: ID!
+    title: String!
+    content: String!
+    author: String!
+    tags: [String!]!
+  ): MutationPostResponseUnion!
+
+  updatePost(
+    id: ID!
+    title: String
+    content: String
+    author: String
+    tags: [String!]
+  ): MutationPostResponseUnion!
+
+  deletePost(id: ID!): MutationPostResponseUnion!
+}

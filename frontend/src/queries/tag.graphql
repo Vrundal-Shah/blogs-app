@@ -1,0 +1,60 @@
+query GetAllTags {
+  tags {
+    ... on TagResponseMultiple {
+      data {
+        id
+        name
+      }
+    }
+    ... on Error {
+      error
+    }
+  }
+}
+
+mutation CreateNewTag($name: String!) {
+  createTag(name: $name) {
+    ... on MutationTagResponse {
+      data {
+        id
+        name
+      }
+    }
+    ... on Error {
+      error
+    }
+  }
+}
+
+mutation UpdateExistingTag($id: ID!, $name: String!) {
+  updateTag(id: $id, name: $name) {
+    ... on MutationTagResponse {
+      data {
+        id
+        name
+      }
+    }
+    ... on Error {
+      error
+    }
+  }
+}
+
+mutation DeleteExistingTag($id: ID!) {
+  deleteTag(id: $id) {
+    ... on MutationTagResponse {
+      data {
+        id
+        name
+      }
+    }
+    ... on Error {
+      error
+    }
+  }
+}
+
+fragment TagDetails on TagInput {
+  id
+  name
+}

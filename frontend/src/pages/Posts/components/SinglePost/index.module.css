@@ -1,0 +1,125 @@
+/* Styling for the Post container */
+.container {
+  margin: 3em;
+  text-decoration: none;
+  padding: 2.5em;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  margin-bottom: 3em;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+  transition: box-shadow 0.3s ease;
+  /* add pointer on hover */
+  cursor: pointer;
+}
+
+/* Title styling with every word in uppercase */
+h2 {
+  margin-top: 0;
+  font-size: 2em;
+  color: #333;
+  text-transform: capitalize;
+  flex: 1;
+}
+
+/* Limited tags display */
+.tags {
+  display: flex;
+  gap: 0.5em;
+}
+
+.tag {
+  background-color: #007bff;
+  color: #fff;
+  padding: 0.2em 0.8em;
+  border-radius: 12px;
+  font-size: 0.8em;
+}
+
+/* Content styling with max 4 lines display */
+.content {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Read More Button styling */
+.readMore {
+  align-self: flex-end;
+  padding: 0.5em 1em;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.readMore:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .container {
+    padding: 1.5em;
+  }
+}
+
+/* Full Post Styling */
+
+.fullContainer {
+  padding: 3em;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  margin-bottom: 3em;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+  background-color: #fff;
+}
+
+.fullTitle {
+  margin-top: 0;
+  font-size: 2.5em;
+  color: #333;
+  text-transform: capitalize;
+}
+
+.fullTags {
+  display: flex;
+  gap: 1em;
+  margin-top: -0.5em;
+}
+
+/* Go back button */
+.goBackButton {
+  margin-top: 1em;
+  align-self: flex-start;
+  padding: 0.5em 1em;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.goBackButton:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .fullContainer {
+    padding: 2em;
+  }
+
+  .fullTitle {
+    font-size: 2em;
+  }
+}

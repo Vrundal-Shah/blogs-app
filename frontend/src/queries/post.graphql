@@ -1,0 +1,126 @@
+query GetAllPosts {
+  posts {
+    ... on PostResponseMultiple {
+      data {
+        _id
+        post {
+          userId
+          title
+          content
+          author
+          createdAt
+          updatedAt
+          tags
+          commentIds
+        }
+      }
+    }
+    ... on Error {
+      error
+    }
+  }
+}
+
+query GetPostById($id: ID!) {
+  post(id: $id) {
+    ... on PostResponseSingle {
+      data {
+        userId
+        title
+        content
+        author
+        createdAt
+        updatedAt
+        tags
+        commentIds
+      }
+    }
+    ... on Error {
+      error
+    }
+  }
+}
+
+mutation CreateNewPost(
+  $userId: ID!
+  $title: String!
+  $content: String!
+  $author: String!
+  $tags: [String!]!
+) {
+  createPost(
+    userId: $userId
+    title: $title
+    content: $content
+    author: $author
+    tags: $tags
+  ) {
+    ... on MutationPostResponse {
+      data {
+        userId
+        title
+        content
+        author
+        createdAt
+        updatedAt
+        tags
+        commentIds
+      }
+    }
+    ... on Error {
+      error
+    }
+  }
+}
+
+mutation UpdateExistingPost(
+  $id: ID!
+  $title: String
+  $content: String
+  $author: String
+  $tags: [String!]
+) {
+  updatePost(
+    id: $id
+    title: $title
+    content: $content
+    author: $author
+    tags: $tags
+  ) {
+    ... on MutationPostResponse {
+      data {
+        userId
+        title
+        content
+        author
+        createdAt
+        updatedAt
+        tags
+        commentIds
+      }
+    }
+    ... on Error {
+      error
+    }
+  }
+}
+
+mutation DeletePostById($id: ID!) {
+  deletePost(id: $id) {
+    ... on MutationPostResponse {
+      data {
+        userId
+        title
+        content
+        author
+        createdAt
+        updatedAt
+        tags
+        commentIds
+      }
+    }
+    ... on Error {
+      error
+    }
+  }
+}

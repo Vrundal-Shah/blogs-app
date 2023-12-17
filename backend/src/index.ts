@@ -33,6 +33,12 @@ interface ContextType {
   };
 }
 
+const isProduction = process.env.NODE_ENV === 'production';
+
+const allowedOrigin = isProduction
+  ? 'https://your-production-domain.com' // Replace with your actual production domain
+  : 'http://localhost:3000';
+
 async function createContext({
   req,
   res,
@@ -90,7 +96,7 @@ for (const filename of ['user', 'post', 'tag', 'comment']) {
   typeDefs.push(
     readFileSync(`./src/graphql/schemas/${filename}.graphql`, {
       encoding: 'utf8',
-    }),
+    })
   );
 }
 
@@ -108,7 +114,7 @@ server.start().then(() => {
   // and our expressMiddleware function.
   app.use(
     '/',
-    cors({ origin: 'http://localhost:3000', credentials: true }),
+    cors({ origin: allowedOrigin, credentials: true }),
     bodyParser.json(),
     expressMiddleware(server, {
       context: async ({ req, res }) => {
@@ -133,7 +139,7 @@ server.start().then(() => {
 
         return context;
       },
-    }),
+    })
   );
   httpServer.listen({ port: 4000 }, () => {
     console.log(`🚀 Server ready at http://localhost:4000/`);

@@ -145,6 +145,8 @@ export const userResolvers = {
       const { models, res } = ctx;
       const { User } = models;
 
+      console.log('in signUpGoogle');
+
       try {
         const data = await getGoogleProfile(accessToken);
         const { email, given_name: firstName, family_name: lastName } = data;
@@ -211,10 +213,14 @@ export const userResolvers = {
     },
     signOutGoogle: async (_: any, args: any, ctx: any) => {
       const { res } = ctx;
+      console.log('in signOutGoogle');
 
       // only logged-in users can sign out
       const response = authenticate(ctx);
+      console.log('response', response);
       if (response.error) {
+        console.log('signOutGoogle fail');
+
         return {
           error: response.error.message,
         };
@@ -228,6 +234,8 @@ export const userResolvers = {
         expires: new Date(0), // Set the expiration to Unix epoch time (essentially clearing the cookie)
       });
 
+      console.log('signOutGoogle success');
+
       return {
         data: true,
       };
@@ -235,7 +243,7 @@ export const userResolvers = {
     updateUser: async (
       _: any,
       { id, firstName, lastName, email }: any,
-      ctx: any,
+      ctx: any
     ) => {
       const response = authenticate(ctx);
       if (response.error) {
@@ -249,7 +257,7 @@ export const userResolvers = {
         const user = await User.findByIdAndUpdate(
           id,
           { firstName, lastName, email },
-          { new: true },
+          { new: true }
         );
         return {
           data: user,

@@ -42,7 +42,7 @@ const commentResolvers = {
     commentsByPostId: async (
       _: any,
       { postId }: { postId: string },
-      ctx: any,
+      ctx: any
     ) => {
       // const response = authenticate(ctx);
       // if (response.error) {
@@ -64,7 +64,7 @@ const commentResolvers = {
     commentsByReplyToId: async (
       _: any,
       { replyToId }: { replyToId: string },
-      ctx: any,
+      ctx: any
     ) => {
       // const response = authenticate(ctx);
       // if (response.error) {
@@ -81,7 +81,7 @@ const commentResolvers = {
     commentsByAuthorId: async (
       _: any,
       { authorId }: { authorId: string },
-      ctx: any,
+      ctx: any
     ) => {
       const response = authenticate(ctx);
       if (response.error) {
@@ -125,8 +125,9 @@ const commentResolvers = {
         content: string;
         authorId: string;
       },
-      ctx: any,
+      ctx: any
     ) => {
+      console.log('in createComment');
       const response = authenticate(ctx);
       if (response.error) {
         return { error: response.error.message };
@@ -166,7 +167,7 @@ const commentResolvers = {
     updateComment: async (
       _: any,
       { id, content }: { id: string; content: string },
-      ctx: any,
+      ctx: any
     ) => {
       const response = authenticate(ctx);
       if (response.error) {
@@ -177,7 +178,7 @@ const commentResolvers = {
         const updatedComment = await CommentModel.findByIdAndUpdate(
           id,
           { content },
-          { new: true },
+          { new: true }
         );
         if (!updatedComment) throw new Error('Comment not found');
         return { data: updatedComment };
@@ -225,7 +226,7 @@ const commentResolvers = {
         const comment = await CommentModel.findById(id);
         if (!comment) throw new Error('Comment not found');
         comment.likesUserIds = comment.likesUserIds.filter(
-          (userId) => userId.toString() !== ctx.user.id.toString(),
+          (userId) => userId.toString() !== ctx.user.id.toString()
         );
         await comment.save();
         return { data: comment };

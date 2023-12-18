@@ -21,6 +21,7 @@ const reducer = (state: AuthState, action: AuthAction): AuthState => {
   console.log('Reducer - Current state:', state, 'Action:', action); // Log current state and action
   switch (action.type) {
     case 'LOGIN':
+      localStorage.setItem('userId', JSON.stringify(action.payload));
       return { userId: action.payload };
     case 'LOGOUT':
       localStorage.removeItem('userId');

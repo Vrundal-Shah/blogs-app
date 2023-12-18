@@ -25,6 +25,9 @@ const client = new ApolloClient({
   uri: allowedOrigin,
   cache: new InMemoryCache(),
   credentials: 'include',
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem('userId')}`,
+  },
 });
 
 console.log(process.env.REACT_APP_CLIENT_ID);

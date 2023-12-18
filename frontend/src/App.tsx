@@ -35,7 +35,8 @@ const App = () => {
   const [accessToken, setAccessToken] = useState<string | null>(null);
   // const [userId, setUserId] = useState<string | null>(null);
   const contextValue = useContext(AuthContext);
-  let state: any = false;
+  console.log(`contextValue: ${contextValue}`);
+  let state: null | string = null;
 
   if (contextValue?.state.userId) {
     state = contextValue?.state.userId;

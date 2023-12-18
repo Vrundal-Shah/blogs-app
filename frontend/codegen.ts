@@ -3,7 +3,7 @@ import type { CodegenConfig } from '@graphql-codegen/cli';
 const isProduction = process.env.NODE_ENV === 'production';
 
 const allowedOrigin = isProduction
-  ? 'https://your-production-domain.com' // Replace with your actual production domain
+  ? 'https://blogs-app-y5yb.onrender.com' // Replace with your actual production domain
   : 'http://localhost:4000';
 
 const config: CodegenConfig = {

@@ -18,14 +18,13 @@ const AuthContext = createContext<
 >(undefined);
 
 const reducer = (state: AuthState, action: AuthAction): AuthState => {
+  console.log('Reducer - Current state:', state, 'Action:', action); // Log current state and action
   switch (action.type) {
     case 'LOGIN':
       return { userId: action.payload };
-
     case 'LOGOUT':
       localStorage.removeItem('userId');
       return { userId: null };
-
     default:
       return state;
   }
@@ -45,7 +44,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const userId = userItem ? JSON.parse(userItem) : null;
 
     if (userId) {
-      return dispatch({ type: 'LOGIN', payload: userId.payload });
+      dispatch({ type: 'LOGIN', payload: userId.payload });
     }
   }, []);
 

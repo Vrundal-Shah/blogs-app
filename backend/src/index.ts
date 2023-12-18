@@ -36,7 +36,7 @@ interface ContextType {
 const isProduction = process.env.NODE_ENV === 'production';
 
 const allowedOrigin = isProduction
-  ? 'https://blogs-app-beige.vercel.app' // Replace with your actual production domain
+  ? 'https://blogs-app-vrundal-shah.vercel.app' // Replace with your actual production domain
   : 'http://localhost:3001';
 
 async function createContext({

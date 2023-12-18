@@ -29,7 +29,7 @@ const AddComment = ({ postId, commentsRefetch }: AddCommentProps) => {
       ) {
         console.error(
           'Error creating comment:',
-          res.data?.createComment?.error,
+          res.data?.createComment?.error
         );
       } else {
         console.log('Comment created successfully!');

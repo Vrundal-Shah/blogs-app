@@ -2,41 +2,36 @@ import { useContext } from 'react';
 import { useSignOutGoogleMutation } from '../../../gql/generated';
 import AuthContext from '../../../contexts/AuthContext';
 
-type Props = {};
-
-const Logout = (props: Props) => {
+const Logout = () => {
   const [signOutGoogleMutation] = useSignOutGoogleMutation();
   const contextValue = useContext(AuthContext);
-  let dispatch: any = undefined;
-  // console.log('contextValue', contextValue);
 
-  if (contextValue) {
-    dispatch = contextValue.dispatch;
+  if (!contextValue) {
+    // Handle the case where contextValue is undefined
+    // This could be returning null, throwing an error, or showing a message
+    return <div>Context not available</div>;
   }
+
+  const { dispatch } = contextValue;
 
   const handleSignOut = async () => {
     try {
-      // Call the signOutGoogleMutation to sign the user out
-      let mutationRes = await signOutGoogleMutation();
-
-      if (
-        mutationRes.data?.signOutGoogle &&
-        mutationRes.data?.signOutGoogle.__typename === 'Error'
-      ) {
+      const mutationRes = await signOutGoogleMutation();
+      if (mutationRes.data?.signOutGoogle?.__typename === 'Error') {
         console.error('Error signing out:', mutationRes.data?.signOutGoogle);
+        // Optionally, handle specific logout errors here
+      } else {
+        // Successful logout
+        localStorage.removeItem('userId');
+        dispatch({ type: 'LOGOUT' });
+        // Optionally, redirect or notify the user
       }
-      // delete user from the localstorage
-      localStorage.removeItem('userId');
-      // Wipe out the Auth context (user:null) / dipatch 'LOGOUT'
-      dispatch({ type: 'LOGOUT' });
     } catch (error) {
       console.error('Error signing out:', error);
-      if (localStorage.getItem('userId')) {
-        dispatch({ type: 'LOGOUT' });
-      }
+      dispatch({ type: 'LOGOUT' }); // Ensure logout in case of mutation error
     }
   };
-  // button to sign out
+
   return <button onClick={handleSignOut}>Logout</button>;
 };
 

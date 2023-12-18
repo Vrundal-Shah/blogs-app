@@ -16,10 +16,10 @@ import SinglePost from './pages/Posts/components/SinglePost';
 // import Post from './pages/Posts/components/Post';
 
 const isProduction =
-  process.env.NODE_ENV === 'production' ? 'production' : 'development';
+  process.env.NODE_ENV === 'production' ? 'production' : null;
 const allowedOrigin = isProduction
   ? 'https://blogs-app-y5yb.onrender.com' // Replace with your actual production domain
-  : 'http://localhost:3000';
+  : 'http://localhost:4000';
 
 const client = new ApolloClient({
   uri: allowedOrigin,

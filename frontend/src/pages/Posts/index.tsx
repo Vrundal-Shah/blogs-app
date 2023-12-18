@@ -15,7 +15,8 @@ const Posts = (props: Props) => {
     return (
       <div>
         {' '}
-        No Posts present. <Link to="/posts/create">You can write one!</Link>
+        Error! {error.clientErrors[0]?.message} No Posts present.{' '}
+        <Link to="/posts/create">You can write one!</Link>
       </div>
     );
   }
@@ -30,7 +31,7 @@ const Posts = (props: Props) => {
     <div>
       <h1>Posts</h1>
       {postsData?.data?.map((post, index) =>
-        post ? <Post key={post._id} post={post} smallCard={true} /> : null,
+        post ? <Post key={post._id} post={post} smallCard={true} /> : null
       )}
     </div>
   );

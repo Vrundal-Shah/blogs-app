@@ -9,7 +9,7 @@ const AddComment = ({ postId, commentsRefetch }: AddCommentProps) => {
   const [createNewCommentMutation, { loading, error }] =
     useCreateNewCommentMutation();
   const contextValue = React.useContext(AuthContext);
-  const state = contextValue?.state.userId;
+  const state = (contextValue?.state.userId as any)?.userId;
 
   const [comment, setComment] = useState(''); // State to hold comment text
 

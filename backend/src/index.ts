@@ -37,7 +37,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 const prodAllowedOrigins = [
   'https://blogspot-63t1.onrender.com',
-  'blogs-app-beige.vercel.app',
+  'https://blogs-app-beige.vercel.app',
 ];
 const devAllowedOrigins = ['http://localhost:3001', 'http://localhost:3000'];
 // const allowedOrigin = isProduction
@@ -121,9 +121,18 @@ server.start().then(() => {
     '/',
     cors({
       origin: (origin, callback) => {
-        if (!origin || (isProduction && prodAllowedOrigins.indexOf(origin) !== -1) || (!isProduction && devAllowedOrigins.indexOf(origin) !== -1)) {
+        if (
+          !origin ||
+          (isProduction && prodAllowedOrigins.indexOf(origin) !== -1) ||
+          (!isProduction && devAllowedOrigins.indexOf(origin) !== -1)
+        ) {
           callback(null, true);
         } else {
+          if (isProduction) {
+            if (origin.includes('vercel.app') && origin.includes('blogs')) {
+              callback(null, true);
+            }
+          }
           callback(new Error('Not allowed by CORS'));
         }
       },

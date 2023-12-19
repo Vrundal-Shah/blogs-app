@@ -35,9 +35,14 @@ interface ContextType {
 
 const isProduction = process.env.NODE_ENV === 'production';
 
-const allowedOrigin = isProduction
-  ? 'https://blogspot-63t1.onrender.com' // Replace with your actual production domain
-  : 'http://localhost:3001';
+const prodAllowedOrigins = [
+  'https://blogspot-63t1.onrender.com',
+  'blogs-app-beige.vercel.app',
+];
+const devAllowedOrigins = ['http://localhost:3001', 'http://localhost:3000'];
+// const allowedOrigin = isProduction
+//   ? 'https://blogspot-63t1.onrender.com' // Replace with your actual production domain
+//   : 'http://localhost:3001';
 
 async function createContext({
   req,
@@ -114,7 +119,16 @@ server.start().then(() => {
   // and our expressMiddleware function.
   app.use(
     '/',
-    cors({ origin: allowedOrigin, credentials: true }),
+    cors({
+      origin: (origin, callback) => {
+        if (!origin || (isProduction && prodAllowedOrigins.indexOf(origin) !== -1) || (!isProduction && devAllowedOrigins.indexOf(origin) !== -1)) {
+          callback(null, true);
+        } else {
+          callback(new Error('Not allowed by CORS'));
+        }
+      },
+      credentials: true,
+    }),
     bodyParser.json(),
     expressMiddleware(server, {
       context: async ({ req, res }) => {
